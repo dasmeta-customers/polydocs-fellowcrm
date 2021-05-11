@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -6,7 +6,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 import os
 
-from .config import DevelopmentConfig, TestConfig, ProductionConfig
+from .config import DevelopmentConfig, TestConfig, ProductionConfig, DigitalocenDEV
 
 # database handle
 db = SQLAlchemy(session_options={"autoflush": False})
@@ -35,6 +35,8 @@ def create_app(config_class=ProductionConfig):
 
     if os.getenv('FLASK_ENV') == 'development':
         config_class = DevelopmentConfig()
+    elif os.getenv('FLASK_ENV') == 'DigitalocenDEV':
+        config_class = DigitalocenDEV()
     elif os.getenv('FLASK_ENV') == 'production':
         config_class = ProductionConfig()
     elif os.getenv('FLASK_ENV') == 'testing':
@@ -59,7 +61,10 @@ def create_app(config_class=ProductionConfig):
 
     with app.app_context():
         # check if the config table exists, otherwise run install
+       
         engine = db.get_engine(app)
+    
+
         if not engine.dialect.has_table(engine, 'app_config'):
             return run_install(app)
         else:
@@ -67,7 +72,7 @@ def create_app(config_class=ProductionConfig):
             row = AppConfig.query.first()
             if not row:
                 return run_install(app)
-
+    
         # application is installed so extends the config
         from fellowcrm.settings.models import AppConfig, Currency, TimeZone
         app_cfg = AppConfig.query.first()
