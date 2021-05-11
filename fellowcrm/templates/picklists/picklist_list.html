@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            {% if current_user.is_admin %}
+            <a class="btn btn-sm btn-outline-secondary mr-2" role="button" href="{{ url_for('leads.import_bulk_leads') }}">
+                <span data-feather="upload"></span>
+                  import picklists ...
+            </a>
+            {% endif %}
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('picklists.new_picklist') }}">
+                <span data-feather="plus"></span>
+                  New
+            </a>
+        </div>
+    </div>
+    
+    {% if picklists.items()|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover fixed-layout-table">
+              <thead class="thead-light">
+                <tr>
+                  <th width="40" scope="col">
+                      <input type="checkbox" id="select_all" value="all" />
+                  </th>
+                    <th width="150"></th>
+                    <th width="150" scope="col">Type</th>
+                    <th width="300" scope="col">Name</th>
+                    <th width="300" scope="col">Language Independent Code</th>
+                    <th width="200" scope="col">is Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for picklist in picklists.items() %}
+                <tr>
+                  <th scope="row">
+                      <input class="cb" type="checkbox" value="{{ picklist.id }}" />
+                  </th>
+                    <th>
+                        <a href="{{ url_for('picklists.update_picklist', picklist_id=picklist.id) }}" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                            <span data-feather="edit"></span>
+                        </a>
+                        <a href="{{ url_for('picklists.delete_picklist', picklist_id=picklist.id) }}" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                            <span data-feather="trash"></span>
+                        </a>
+
+                        <a href="{{ url_for('picklists.get_picklist_view', picklist_id=picklist.id) }}"
+                           class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                            <span data-feather="arrow-up-right"></span>
+                        </a>
+                    
+                    </th>
+                    <td>{{ picklist.type }}</td>
+                    <td>{{ picklist.name }}</td>
+                    <td>{{ picklist.name_lang }}</td>
+                    <td><div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="{{ picklist.id }}">
+                        <label class="custom-control-label" for="{{ picklist.id }}">{{ picklist.is_active }}</label>
+                    </div></td>
+                    
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+        <!-- pagination -->
+        {% if picklists.total_records > 10 %}
+            {% with view_id="accounts.get_picklists_view", items=picklists %}
+                {% include "common/pagination.html" %}
+            {% endwith %}
+        {% endif %}
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>No Picklist found. Please create your first Picklist.</p>
+        </div>
+    {%  endif %}
+<script>
+    $(document).ready(function() {
+        $('#select_all').on('click', function() {
+            if ($(this).is(':checked')) {
+                $('.cb').prop('checked', true);
+            } else {
+                $('.cb').prop('checked', false);
+            }
+        });
+    });
+</script>
+{% endblock %}
