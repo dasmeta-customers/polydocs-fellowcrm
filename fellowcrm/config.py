@@ -17,6 +17,8 @@ class DevelopmentConfig(Config):
 class DigitalocenDEV(Config):
     DEV_DB_USER = "crm_dev"
     DEV_DB_USER = "g1tzcq3vwm9kyu1f"
+    TESTING = True
+    SECRET_KEY = 'your_secret_key'
     DEV_DB_PASS = "db-postgresql-fra1-28416-do-user-1010676-0.b.db.ondigitalocean.com"
     port = 25061
     DEV_DB_NAME = "crm_dev"
