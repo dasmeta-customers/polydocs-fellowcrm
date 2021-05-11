@@ -56,7 +56,7 @@ create a new database with the following commands.
     .. code-block:: python
     
         psql
-        create database eeazy_crm
+        create database fellowcrm
 
 Installation Steps
 ============
