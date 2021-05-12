@@ -23,6 +23,7 @@ class DigitalocenDEV(Config):
     port = 25061
     DEV_DB_NAME = "crm_dev"
     sslmode = "require"
+    
     SQLALCHEMY_DATABASE_URI = f'postgresql://crm_dev:g1tzcq3vwm9kyu1f@db-postgresql-fra1-28416-do-user-1010676-0.b.db.ondigitalocean.com:25061/crm_dev?sslmode=require'
 
 class TestConfig(Config):
