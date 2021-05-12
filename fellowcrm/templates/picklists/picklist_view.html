@@ -28,11 +28,36 @@
                 <li class="list-group-item g_field">
                   <div class="label">Language-Independent Code</div>
                     
-                        <div class="text"><span data-feather="mail"></span> {{ picklist.name_lang }}</div>
+                        <div class="text">{{ picklist.name_lang }}</div>
 
               </li>
               
             </ul>
         </div>
+        <div class="col-5">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item g_field col-12">
+                <div class="label">Language</div>
+                <div class="text">{{ picklist.lang if picklist.lang else '_' }}</div>
+            </li>
+            <li class="list-group-item g_field col-12">
+              <div class="label">Order</div>
+              <div class="text">{{ picklist.order if picklist.order else '_' }}</div>
+          </li>
+      
+            <li class="list-group-item g_field col-12">
+                  <div class="row">
+                      <div class="col-6">
+                          <div class="label">is Active</div>
+                          <div class="text">{{ picklist.is_active if picklist.is_active else '_' }}</div>
+                      </div>
+                      <div class="col-6">
+                          <div class="label">Translate</div>
+                          <div class="text">{{ picklist.translate if picklist.translate else '_' }}</div>
+                      </div>
+                  </div>
+            </li>
+          </ul>
+      </div>
     </div>
     {% endblock %}
