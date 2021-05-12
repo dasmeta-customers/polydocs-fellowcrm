@@ -12,7 +12,7 @@ class Picklist(db.Model):
     
     is_active = db.Column(db.Boolean, default=True)
     translate = db.Column(db.Boolean, default=True)
-    order = db.Column(db.Integer)
+    order = db.Column(db.Integer, nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @staticmethod

@@ -38,6 +38,7 @@ def update_picklist(picklist_id):
             picklist.type = form.type.data
             picklist.name = form.name.data
             picklist.lang = form.lang.data
+            picklist.order = form.order.data
             picklist.name_lang = form.name_lang.data
             picklist.is_active = form.is_active.data
             
@@ -51,6 +52,7 @@ def update_picklist(picklist_id):
         form.type.data = picklist.type
         form.name.data = picklist.name
         form.lang.data = picklist.lang
+        form.order.data = picklist.order
         form.name_lang.data = picklist.name_lang
 
         form.is_active.data = picklist.is_active
@@ -68,7 +70,8 @@ def new_picklist():
         if form.validate_on_submit():
             picklist = Picklist(name=form.name.data,
                                lang=form.lang.data,
-                               is_active=form.is_active.data
+                               is_active=form.is_active.data,
+                               order=form.order
                               )
 
             
