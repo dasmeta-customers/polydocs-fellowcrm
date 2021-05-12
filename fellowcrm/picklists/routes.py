@@ -18,7 +18,7 @@ picklists = Blueprint('picklists', __name__)
 @picklists.route("/picklist", methods=['GET', 'POST'])
 @login_required
 @check_access('picklists', 'view')
-def get_picklist_view():
+def get_picklists_view():
     query = Picklist.query.filter().order_by(Picklist.date_created.desc())
     return render_template("picklists/picklist_list.html", title="Picklist View",
                         picklists=Paginate(query=query))
@@ -30,7 +30,7 @@ def get_picklist_view():
 def update_picklist(picklist_id):
     picklist = Picklist.get_picklist(picklist_id)
     if not picklist:
-        return redirect(url_for('picklist.get_picklist_view'))
+        return redirect(url_for('picklists.get_picklists_view'))
 
     form = NewPicklist()
     if request.method == 'POST':
@@ -44,7 +44,7 @@ def update_picklist(picklist_id):
             
             db.session.commit()
             flash('The Picklist has been successfully updated', 'success')
-            return redirect(url_for('picklists.get_picklist_view', picklist_id=picklist.id))
+            return redirect(url_for('picklists.get_picklists_view', picklist_id=picklist.id))
         else:
             print(form.errors)
             flash('Picklists update failed! Form has errors', 'danger')
@@ -79,7 +79,7 @@ def new_picklist():
             db.session.add(picklist)
             db.session.commit()
             flash('Picklist has been successfully created!', 'success')
-            return redirect(url_for('picklists.get_picklist_view'))
+            return redirect(url_for('picklists.get_picklists_view'))
         else:
             for error in form.errors:
                 print(error)
@@ -95,4 +95,13 @@ def delete_picklist(picklist_id):
     Picklist.query.filter_by(id=picklist_id).delete()
     db.session.commit()
     flash('Picklist removed successfully!', 'success')
-    return redirect(url_for('picklists.get_picklist_view'))
+    return redirect(url_for('picklists.get_picklists_view'))
+
+
+
+@picklists.route("/picklists/<int:picklist_id>")
+@login_required
+@check_access('picklists', 'view')
+def get_picklist_view(picklist_id):
+    picklist = Picklist.query.filter_by(id=picklist_id).first()
+    return render_template("picklists/picklist_view.html", title="View Picklist", picklist=picklist)
