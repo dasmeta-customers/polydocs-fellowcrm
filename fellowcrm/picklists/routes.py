@@ -35,12 +35,13 @@ def update_picklist(picklist_id):
     form = NewPicklist()
     if request.method == 'POST':
         if form.validate_on_submit():
-            picklist.type = form.type.data
+            picklist.type = form.types.data
             picklist.name = form.name.data
             picklist.lang = form.lang.data
             picklist.order = form.order.data
             picklist.name_lang = form.name_lang.data
             picklist.is_active = form.is_active.data
+            picklist.translate = form.translate.data
             
             db.session.commit()
             flash('The Picklist has been successfully updated', 'success')
@@ -49,13 +50,16 @@ def update_picklist(picklist_id):
             print(form.errors)
             flash('Picklists update failed! Form has errors', 'danger')
     elif request.method == 'GET':
-        form.type.data = picklist.type
+        form.type.data = picklist.types
         form.name.data = picklist.name
+        form.name_lang.data = picklist.name_lang
+        
         form.lang.data = picklist.lang
         form.order.data = picklist.order
         form.name_lang.data = picklist.name_lang
 
         form.is_active.data = picklist.is_active
+        form.translate.data = picklist.translate
 
         form.submit.label = Label('update_picklist', 'Update Picklist')
     return render_template("picklists/new_picklist.html", title="Update Picklist", form=form)
@@ -68,10 +72,14 @@ def new_picklist():
     form = NewPicklist()
     if request.method == 'POST':
         if form.validate_on_submit():
-            picklist = Picklist(name=form.name.data,
+            picklist = Picklist(
+                               name=form.name.data,
+                               type=form.types.data,
                                lang=form.lang.data,
                                is_active=form.is_active.data,
-                               order=form.order
+                               translate=form.translate.data,
+                               order=form.order.data,
+                               name_lang=form.name_lang.data
                               )
 
             

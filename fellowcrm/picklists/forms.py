@@ -9,7 +9,9 @@ from fellowcrm.users.models import User
 
 
 class NewPicklist(FlaskForm):
-    type = StringField('Picklist Type', validators=[DataRequired(message='Picklist Type is mandatory')])
+    types = QuerySelectField('Type', query_factory=Picklist.get_picklist_by_typ, get_pk=lambda a: a.id,
+                                 get_label=Picklist.get_label,allow_blank=True, blank_text='LOV_TYPE')
+    #type = StringField('Picklist Type', validators=[DataRequired(message='Picklist Type is mandatory')])
     name = StringField('Picklist Name', validators=[DataRequired(message='Picklist name is mandatory')])
     lang = StringField('Picklist Lang')
     
@@ -31,6 +33,9 @@ def filter_accounts_adv_filters_query():
         {'id': 6, 'title': 'Created In Last 30 Days'}
     ]
 
+class PicklistTyp(FlaskForm):
+    assignees = QuerySelectField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
+                                 get_label=User.get_label, allow_blank=True, blank_text='[-- Select Owner --]')
 
 class FilterAccounts(FlaskForm):
     txt_search = StringField()

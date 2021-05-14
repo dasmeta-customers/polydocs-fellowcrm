@@ -55,7 +55,7 @@
                     <td>{{ picklist.name }}</td>
                     <td>{{ picklist.name_lang }}</td>
                     <td><div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="{{ picklist.id }}">
+                        <input type="checkbox" class="custom-control-input" id="{{ picklist.id }}" {% if picklist.is_active == 1 %} checked=true {% endif %}>
                         <label class="custom-control-label" for="{{ picklist.id }}">{{ picklist.is_active }}</label>
                     </div></td>
                     

@@ -16,17 +16,17 @@
     <div class="row">
         <div class="col-3">
             <div class="form-group">
-                {{ form.type.label(class="form-control-label") }}
-                {% if form.type.errors %}
-                    {{ form.type(class="form-control form-control-lg required is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.type.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                  {% else %}
-                    {{ form.type(class="form-control required from-control-lg", placeholder="picklist type ...") }}
-                  {% endif %}
+                {{ form.types.label(class="form-control-label") }}
+                {% if form.types.errors %}
+                    {{ form.types(class="my-select form-control form-control-lg required is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.types.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    {{ form.types(class="my-select form-control from-control-lg required") }}
+                {% endif %}
             </div>
         </div>
         <div class="col-9">
@@ -78,9 +78,7 @@
         <div class="col-4">
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="{{ form.id }}">
-                    <label class="custom-control-label" for="{{ form.id }}">{{ form.is_active.label(class="form-control-label") }}</label>
-                
+                    {{ form.is_active }} Is Active
                 </div>
                 
             </div>
@@ -88,9 +86,7 @@
         <div class="col-4">
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="{{ form.id }}">
-                    <label class="custom-control-label" for="{{ form.id }}">{{ form.translate.label(class="form-control-label") }}</label>
-                
+                    {{ form.translate }} Translate
                 </div>
                 
             </div>
@@ -106,10 +102,11 @@
                         {% endfor %}
                     </div>
                   {% else %}
-                    {{ form.order(class="form-control from-control-lg", placeholder="Order ...") }}
+                    {{ form.order(class="form-control from-control-lg",  placeholder="Order ...") }}
                   {% endif %}
             </div>
         </div>
     </div>
 </form>
+
     {% endblock %}

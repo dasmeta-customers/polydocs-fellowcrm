@@ -5,6 +5,7 @@ from flask_login import current_user
 
 class Picklist(db.Model):
     id = db.Column(db.Integer, db.Sequence('picklist_id_seq'), primary_key=True)
+
     type = db.Column(db.String(100), nullable=False, default='LOV_TYPE')
     name = db.Column(db.String(100))
     name_lang = db.Column(db.String(100))
@@ -12,7 +13,7 @@ class Picklist(db.Model):
     
     is_active = db.Column(db.Boolean, default=True)
     translate = db.Column(db.Boolean, default=True)
-    order = db.Column(db.Integer, nullable=True)
+    order = db.Column(db.Integer,default=0, nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @staticmethod
@@ -30,8 +31,9 @@ class Picklist(db.Model):
         return Picklist.query.filter_by(id=picklist_id).first()
     
     @staticmethod
-    def get_picklist_by_typ(type):
-        return Picklist.query.filter_by(type=type)
+    def get_picklist_by_typ():
+        return Picklist.query.filter_by(type='LOV_TYPE')
+    
 
     def __repr__(self):
         return f"Picklist('{self.name}')"

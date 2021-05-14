@@ -6,6 +6,7 @@ from wtforms_sqlalchemy.fields import QuerySelectField
 
 from fellowcrm.users.models import User
 
+#from pycountry import pycountry
 
 class NewAccount(FlaskForm):
     name = StringField('Account Name', validators=[DataRequired(message='Account name is mandatory')])
@@ -19,6 +20,7 @@ class NewAccount(FlaskForm):
     addr_city = StringField('City')
     post_code = StringField('Postcode')
     country = StringField('Country')
+   #country = SelectField(u'Country', choices=[(country.alpha_2, country.name) for country in pycountry.countries] , validate_choice=True)
     notes = StringField('Notes', widget=TextArea())
     assignees = QuerySelectField('Assign To', query_factory=User.user_list_query, get_pk=lambda a: a.id,
                                  get_label=User.get_label, default=User.get_current_user)
