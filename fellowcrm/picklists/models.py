@@ -2,6 +2,7 @@ from datetime import datetime
 from fellowcrm import db
 from flask_login import current_user
 
+import json 
 
 class Picklist(db.Model):
     id = db.Column(db.Integer, db.Sequence('picklist_id_seq'), primary_key=True)
@@ -34,6 +35,10 @@ class Picklist(db.Model):
     def get_picklist_by_typ():
         return Picklist.query.filter_by(type='LOV_TYPE')
     
+    @staticmethod
+    def get_picklist_json():
+        picklist = Picklist.query.all()
+        return json.dumps(picklist)
 
     def __repr__(self):
         return f"Picklist('{self.name}')"

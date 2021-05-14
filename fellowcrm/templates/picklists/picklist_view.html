@@ -49,11 +49,12 @@
                   <div class="row">
                       <div class="col-6">
                           <div class="label">is Active</div>
-                          <div class="text">{{ picklist.is_active if picklist.is_active else '_' }}</div>
+                          <input class="form-check-input" type="checkbox" value="{{ picklist.is_active }}" id="is_Active" disabled>
+                          
                       </div>
                       <div class="col-6">
                           <div class="label">Translate</div>
-                          <div class="text">{{ picklist.translate if picklist.translate else '_' }}</div>
+                          <div class="text">{{ picklist.translate if picklist.translate else 'False' }}</div>
                       </div>
                   </div>
             </li>

@@ -1,6 +1,6 @@
 from flask import Blueprint, session
 from flask_login import current_user, login_required
-from flask import render_template, flash, url_for, redirect, request
+from flask import render_template, flash, url_for, redirect, request, jsonify
 from sqlalchemy import or_, text
 from datetime import date, timedelta
 
@@ -13,7 +13,11 @@ from .forms import NewPicklist
 from fellowcrm.rbac import check_access
 from wtforms import Label
 
+import json
+
 picklists = Blueprint('picklists', __name__)
+
+
 
 @picklists.route("/picklist", methods=['GET', 'POST'])
 @login_required
@@ -50,7 +54,7 @@ def update_picklist(picklist_id):
             print(form.errors)
             flash('Picklists update failed! Form has errors', 'danger')
     elif request.method == 'GET':
-        form.type.data = picklist.types
+        form.types.data = picklist.type
         form.name.data = picklist.name
         form.name_lang.data = picklist.name_lang
         
@@ -113,3 +117,21 @@ def delete_picklist(picklist_id):
 def get_picklist_view(picklist_id):
     picklist = Picklist.query.filter_by(id=picklist_id).first()
     return render_template("picklists/picklist_view.html", title="View Picklist", picklist=picklist)
+
+
+
+@picklists.route("/picklists/default", methods=['GET', 'POST'])
+@login_required
+@check_access('picklists', 'create')
+def default_picklist():
+    print ('not now ')
+    pass
+
+
+@picklists.route("/picklists/get", methods=['GET'])
+@login_required
+@check_access('picklists', 'view')
+def get_picklists_view_json():
+    query = Picklist.get_picklist_json()
+    return query
+    
