@@ -6,14 +6,15 @@ from wtforms_sqlalchemy.fields import QuerySelectField
 
 from .models import User, Role
 
+from flask_babel import lazy_gettext as _l
 
 class Register(FlaskForm):
-    first_name = StringField('First Name')
-    last_name = StringField('Last Name',
+    first_name = StringField(_l('First Name'))
+    last_name = StringField(_l('Last Name'),
                             validators=[DataRequired(message='Please enter the last name'), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(
-                            message='Email address is mandatory'),
+                            message=_l('Email address is mandatory')),
                             Email(message='Please enter a valid email address e.g. abc@yourcompany.com')])
     password = PasswordField('Password',
                              validators=[DataRequired(message='Password is mandatory')])

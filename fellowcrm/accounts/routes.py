@@ -15,6 +15,7 @@ from wtforms import Label
 
 accounts = Blueprint('accounts', __name__)
 
+from flask_babel import _
 
 def set_filters(f_id, module):
     today = date.today()

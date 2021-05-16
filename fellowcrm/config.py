@@ -7,11 +7,13 @@ class Config(object):
     RBAC_USE_WHITE = True
     PYTHON_VER_MIN_REQUIRED = '3.5.0'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    LANGUAGES = ['en', 'de']
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
     SECRET_KEY = DEV_SECRET_KEY
+
     SQLALCHEMY_DATABASE_URI = f'postgresql://{DEV_DB_USER}:{DEV_DB_PASS}@{DEV_DB_HOST}/{DEV_DB_NAME}'
 
 class DigitalocenDEV(Config):

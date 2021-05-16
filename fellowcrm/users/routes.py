@@ -1,4 +1,4 @@
-from flask import Blueprint, session
+from flask import Blueprint, session, request
 from flask_login import current_user, login_user, logout_user
 from flask import render_template, flash, url_for, redirect, request
 
@@ -6,11 +6,21 @@ from fellowcrm import db, bcrypt
 from .forms import Register, Login
 from .models import User
 
+
+
+from fellowcrm.config import Config
+
 users = Blueprint('users', __name__)
+
+from flask_babel import _
+
 
 
 @users.route("/login", methods=['GET', 'POST'])
-def login():
+@users.route("/login/<language>", methods=['GET', 'POST'])
+def login(language='en'):
+    print(language)
+    session['language'] = language
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     form = Login()
@@ -19,9 +29,9 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if user:
                 if not user.is_user_active:
-                    flash("""User has not been granted access to the system!
+                    flash(-("""User has not been granted access to the system!
                           Please contact the system administrator""",
-                          'danger')
+                          'danger'))
                 elif not bcrypt.check_password_hash(user.password, form.password.data):
                     flash('Invalid Password!', 'danger')
                 else:
@@ -29,7 +39,9 @@ def login():
                     next_page = request.args.get('next')
                     return redirect(next_page) if next_page else redirect(url_for('main.home'))
             else:
-                flash('User does not exist! Please contact the system administrator', 'danger')
+                flash(_('User does not exist! Please contact the system administrator', 'danger'))
+ 
+    #print (Config.LANGUAGES)
     return render_template("login.html", title="fellowcrm - Login", form=form)
 
 
@@ -46,7 +58,7 @@ def register():
                         is_user_active=True, password=hashed_pwd)
             db.session.add(user)
             db.session.commit()
-            flash('User has been created! You can now login', 'success')
+            flash(_('User has been created! You can now login', 'success'))
             return redirect(url_for('users.login'))
         else:
             flash(f'Failed to register user!', 'danger')

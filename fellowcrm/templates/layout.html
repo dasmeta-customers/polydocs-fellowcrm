@@ -68,50 +68,50 @@
           <li class="nav-item">
             <a class="nav-link active" href="{{ url_for('main.home') }}">
               <i data-feather="home"></i>
-              Dashboard <span class="sr-only">(current)</span>
+              {{ _('Dashboard') }}<span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('leads.get_leads_view') }}">
               <span data-feather="file"></span>
-              Leads
+              {{ _('Leads') }}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('accounts.get_accounts_view') }}">
               <span data-feather="map-pin"></span>
-              Accounts
+              {{ _('Accounts')}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('contacts.get_contacts_view') }}">
               <span data-feather="users"></span>
-              Contacts
+              {{ _('Contacts')}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('deals.get_deals_view') }}">
               <span data-feather="dollar-sign"></span>
-              Deals
+              {{ _('Deals')}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="users"></span>
-              Activities
+              {{ _('Activities')}}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('reports.deal_reports') }}">
               <span data-feather="bar-chart-2"></span>
-              Reports
+              {{ _('Reports')}}
             </a>
           </li>
           {% if current_user.is_admin %}
           <li class="nav-item">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
               <span data-feather="tool"></span>
-              Customizations
+              {{ _('Customizations')}}
             </a>
             <div class="dropdown-menu dd-sm">
               <a class="dropdown-item" href="#">Applet</a>
@@ -134,20 +134,20 @@
           <li class="nav-item">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
               <span data-feather="settings"></span>
-              Settings
+              {{ _('Settings')}}
             </a>
             <div class="dropdown-menu dd-sm">
               <a class="dropdown-item" href="{{ url_for('settings.settings_profile') }}">My Profile</a>
-              <a class="dropdown-item" href="#">Company Details</a>
-              <a class="dropdown-item" href="#">Change Password</a>
+              <a class="dropdown-item" href="#">{{ _('Company Details')}}</a>
+              <a class="dropdown-item" href="#">{{ _('Change Password')}}</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ url_for('settings.settings_staff_list') }}">Staff Management</a>
-              <a class="dropdown-item" href="{{ url_for('settings.settings_roles_view') }}">Roles &amp; Permissions</a>
+              <a class="dropdown-item" href="{{ url_for('settings.settings_staff_list') }}">{{ _('Staff Management')}}</a>
+              <a class="dropdown-item" href="{{ url_for('settings.settings_roles_view') }}">{{ _('Roles &amp; Permissions')}}</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ url_for('app_config.test') }}">Application Settings</a>
+              <a class="dropdown-item" href="{{ url_for('app_config.test') }}">{{ _('Application Settings')}}</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ url_for('settings.email_settings') }}">Email Settings</a>
-              <a class="dropdown-item" href="#">System Settings</a>
+              <a class="dropdown-item" href="{{ url_for('settings.email_settings') }}">{{ _('Email Settings')}}</a>
+              <a class="dropdown-item" href="#">{{ _('System Settings')}}</a>
             </div>
           </li>
         </ul>

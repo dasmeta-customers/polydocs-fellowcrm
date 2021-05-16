@@ -8,6 +8,9 @@ from fellowcrm.users.models import User
 
 #from pycountry import pycountry
 
+from flask_babel import lazy_gettext as _l
+
+
 class NewAccount(FlaskForm):
     name = StringField('Account Name', validators=[DataRequired(message='Account name is mandatory')])
     website = StringField('Website')

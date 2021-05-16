@@ -1,9 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from flask_babel import Babel
+
 import os
 
 from .config import DevelopmentConfig, TestConfig, ProductionConfig, DigitalocenDEV
@@ -22,6 +24,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 
 
+
 def run_install(app_ctx):
     from fellowcrm.install.routes import install
     app_ctx.register_blueprint(install)
@@ -32,7 +35,7 @@ def run_install(app_ctx):
 
 def create_app(config_class=ProductionConfig):
     app = Flask(__name__, instance_relative_config=True)
-
+ 
     if os.getenv('FLASK_ENV') == 'development':
         config_class = DevelopmentConfig()
     elif os.getenv('FLASK_ENV') == 'DigitalocenDEV':
@@ -41,23 +44,11 @@ def create_app(config_class=ProductionConfig):
         config_class = ProductionConfig()
     elif os.getenv('FLASK_ENV') == 'testing':
         config_class = TestConfig()
-
     app.config.from_object(config_class)
-    app.url_map.strict_slashes = False
-    app.jinja_env.globals.update(zip=zip)
-    migrate = Migrate(app, db)
 
+    configure_extensions(app)
 
-
-
-    manager = Manager(app)
-    manager.add_command('db', MigrateCommand)
-
-
-
-    db.init_app(app)
-    bcrypt.init_app(app)
-    login_manager.init_app(app)
+    
 
     with app.app_context():
         # check if the config table exists, otherwise run install
@@ -79,6 +70,9 @@ def create_app(config_class=ProductionConfig):
 
         # include the routes
         # from fellowcrm import routes
+
+        
+
         from fellowcrm.main.routes import main
         from fellowcrm.users.routes import users
         from fellowcrm.leads.routes import leads
@@ -106,3 +100,38 @@ def create_app(config_class=ProductionConfig):
         return app
 
 
+def configure_extensions(app):
+    """configure flask extensions"""
+   
+    #jwt.init_app(app)
+    
+    app.url_map.strict_slashes = False
+    app.jinja_env.globals.update(zip=zip)
+    migrate = Migrate(app, db)
+
+    babel = Babel(app)
+
+    @babel.localeselector
+    def get_locale():
+        if 'language' in session:
+            if session['language'] is not None:
+                return session['language']
+            return 'en'
+        else:
+            return 'en'
+    @babel.timezoneselector
+    def get_timezone():
+        #user = getattr(g, 'user', None)
+
+        #if user is not None:
+        return user.timezone
+
+    manager = Manager(app)
+    manager.add_command('db', MigrateCommand)
+
+    login_manager.init_app(app)
+
+
+    db.init_app(app)
+    bcrypt.init_app(app)
+   
