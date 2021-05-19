@@ -61,17 +61,20 @@
         </div>
         <div class="col-3">
             <div class="form-group">
-                {{ form.lang.label(class="form-control-label") }}
-                {% if form.lang.errors %}
-                    {{ form.lang(class="form-control form-control-lg required is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.lang.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                  {% else %}
-                    {{ form.lang(class="form-control required from-control-lg", placeholder="picklist language ...") }}
-                  {% endif %}
+                
+                {{ form.langs.label(class="form-control-label") }}
+                {% if form.langs.errors %}
+                    {{ form.langs(class="my-select form-control form-control-lg required is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.langs.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.langs(class="my-select form-control from-control-lg required") }}
+                {% endif %}
+                
+                
             </div>
         </div>
         

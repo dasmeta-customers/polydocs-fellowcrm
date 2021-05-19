@@ -78,8 +78,8 @@ def new_picklist():
         if form.validate_on_submit():
             picklist = Picklist(
                                name=form.name.data,
-                               type=form.types.data,
-                               lang=form.lang.data,
+                               type=form.types._data.name,
+                              
                                is_active=form.is_active.data,
                                translate=form.translate.data,
                                order=form.order.data,

@@ -79,6 +79,7 @@ def create_app(config_class=ProductionConfig):
         from fellowcrm.accounts.routes import accounts
         from fellowcrm.contacts.routes import contacts
         from fellowcrm.deals.routes import deals
+        from fellowcrm.activities.routes import activities
         from fellowcrm.settings.routes import settings
         from fellowcrm.settings.app_routes import app_config
         from fellowcrm.reports.routes import reports
@@ -94,6 +95,7 @@ def create_app(config_class=ProductionConfig):
         app.register_blueprint(accounts)
         app.register_blueprint(contacts)
         app.register_blueprint(deals)
+        app.register_blueprint(activities)
         app.register_blueprint(reports)
         app.register_blueprint(picklists)
         app.register_blueprint(upgrade)

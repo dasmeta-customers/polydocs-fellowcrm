@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ url_for('picklists.update_picklist', picklist_id=picklist.id) }}"
+               class="btn btn-md btn-outline-primary mr-2" role="button">
+                <span data-feather="edit-2"></span>
+                  Edit
+            </a>
+            
+            <a href="{{ url_for('picklists.get_picklists_view') }}" class="btn btn-md btn-outline-secondary" role="button">
+                <span data-feather="arrow-left"></span>
+                  Back to List
+            </a>
+        </div>
+    </div>
+
+    
+
+    <div class="row">
+        <div class="col-5">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item g_field">
+                  <div class="label">Name Name</div>
+                  <div class="text">{{ picklist.name if picklist.name else '_' }}</div>
+              </li>
+                <li class="list-group-item g_field">
+                  <div class="label">Language-Independent Code</div>
+                    
+                        <div class="text">{{ picklist.name_lang }}</div>
+
+              </li>
+              
+            </ul>
+        </div>
+        <div class="col-5">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item g_field col-12">
+                <div class="label">Language</div>
+                <div class="text">{{ picklist.lang if picklist.lang else '_' }}</div>
+            </li>
+            <li class="list-group-item g_field col-12">
+              <div class="label">Order</div>
+              <div class="text">{{ picklist.order if picklist.order else '_' }}</div>
+          </li>
+      
+            <li class="list-group-item g_field col-12">
+                  <div class="row">
+                      <div class="col-6">
+                          <div class="label">is Active</div>
+                          <input class="form-check-input" type="checkbox" value="{{ picklist.is_active }}" id="is_Active" disabled>
+                          
+                      </div>
+                      <div class="col-6">
+                          <div class="label">Translate</div>
+                          <div class="text">{{ picklist.translate if picklist.translate else 'False' }}</div>
+                      </div>
+                  </div>
+            </li>
+          </ul>
+      </div>
+    </div>
+    {% endblock %}

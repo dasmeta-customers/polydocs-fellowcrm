@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ url_for('main.home') }}">
+                <i data-feather="home"></i>
+                {{ _('Dashboard') }}<span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('leads.get_leads_view') }}">
+                <span data-feather="file"></span>
+                {{ _('Leads') }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('accounts.get_accounts_view') }}">
+                <span data-feather="map-pin"></span>
+                {{ _('Accounts')}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('contacts.get_contacts_view') }}">
+                <span data-feather="users"></span>
+                {{ _('Contacts')}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('deals.get_deals_view') }}">
+                <span data-feather="dollar-sign"></span>
+                {{ _('Deals')}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('activities.get_activities_view') }}">
+                <span data-feather="users"></span>
+                {{ _('Activities')}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('reports.deal_reports') }}">
+                <span data-feather="bar-chart-2"></span>
+                {{ _('Reports')}}
+              </a>
+            </li>
+            {% if current_user.is_admin %}
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                <span data-feather="tool"></span>
+                {{ _('Customizations')}}
+              </a>
+              <div class="dropdown-menu dd-sm">
+                <a class="dropdown-item" href="#">Applet</a>
+                <a class="dropdown-item" href="#">Business Components</a>
+                <a class="dropdown-item" href="#">Business Object</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">View</a>
+                <a class="dropdown-item" href="#">Screens</a>
+                <a class="dropdown-item" href="#">Menu</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Strings</a>
+                <a class="dropdown-item" href="{{ url_for('picklists.get_picklists_view') }}">Picklist</a>
+                <a class="dropdown-item" href="#">Table</a>
+  
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Workflows</a>
+              </div>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                <span data-feather="settings"></span>
+                {{ _('Settings')}}
+              </a>
+              <div class="dropdown-menu dd-sm">
+                <a class="dropdown-item" href="{{ url_for('settings.settings_profile') }}">My Profile</a>
+                <a class="dropdown-item" href="#">{{ _('Company Details')}}</a>
+                <a class="dropdown-item" href="#">{{ _('Change Password')}}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('settings.settings_staff_list') }}">{{ _('Staff Management')}}</a>
+                <a class="dropdown-item" href="{{ url_for('settings.settings_roles_view') }}">{{ _('Roles &amp; Permissions')}}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('app_config.test') }}">{{ _('Application Settings')}}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('settings.email_settings') }}">{{ _('Email Settings')}}</a>
+                <a class="dropdown-item" href="#">{{ _('System Settings')}}</a>
+              </div>
+            </li>
+          </ul>
+  
+          {% include 'includes/quicklinks.html' %}
+        </div>
+      </nav>
+  
+    </div>
+  </div>

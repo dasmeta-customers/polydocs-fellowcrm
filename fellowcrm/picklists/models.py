@@ -32,13 +32,15 @@ class Picklist(db.Model):
         return Picklist.query.filter_by(id=picklist_id).first()
     
     @staticmethod
-    def get_picklist_by_typ():
+    def get_picklist_typ():
         return Picklist.query.filter_by(type='LOV_TYPE')
     
     @staticmethod
-    def get_picklist_json():
-        picklist = Picklist.query.all()
-        return json.dumps(picklist)
+    def get_picklist_by_typ(search):
+        print (search)
+        return Picklist.query.filter_by(type=search)
+
+   
 
     def __repr__(self):
         return f"Picklist('{self.name}')"

@@ -24,7 +24,7 @@ msgstr ""
 
 #: fellowcrm/templates/layout.html:77
 msgid "Leads"
-msgstr ""
+msgstr "Interessent"
 
 #: fellowcrm/templates/layout.html:83
 msgid "Accounts"

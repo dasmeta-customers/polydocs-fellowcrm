@@ -109,11 +109,11 @@ def update_account(account_id):
             account.account_owner = form.assignees.data
             account.notes = form.notes.data
             db.session.commit()
-            flash('The account has been successfully updated', 'success')
+            flash(_('The account has been successfully updated'), 'success')
             return redirect(url_for('accounts.get_account_view', account_id=account.id))
         else:
             print(form.errors)
-            flash('Accounts update failed! Form has errors', 'danger')
+            flash(_('Accounts update failed! Form has errors'), 'danger')
     elif request.method == 'GET':
         form.name.data = account.name
         form.website.data = account.website
@@ -163,12 +163,12 @@ def new_account():
 
             db.session.add(account)
             db.session.commit()
-            flash('Account has been successfully created!', 'success')
+            flash(_('Account has been successfully created!'), 'success')
             return redirect(url_for('accounts.get_accounts_view'))
         else:
             for error in form.errors:
                 print(error)
-            flash('Your form has errors! Please check the fields', 'danger')
+            flash(_('Your form has errors! Please check the fields'), 'danger')
     return render_template("accounts/new_account.html", title="New Account", form=form)
 
 
@@ -178,7 +178,7 @@ def new_account():
 def delete_account(account_id):
     Account.query.filter_by(id=account_id).delete()
     db.session.commit()
-    flash('Account removed successfully!', 'success')
+    flash(_('Account removed successfully!'), 'success')
     return redirect(url_for('accounts.get_accounts_view'))
 
 

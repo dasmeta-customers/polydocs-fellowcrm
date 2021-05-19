@@ -18,7 +18,7 @@ from fellowcrm.install.data.sample_data import SAMPLE_DATA
 
 upgrade = Blueprint('upgrade', __name__)
 
-
+"""
 @upgrade.route("/upgrade", methods=['GET', 'POST'])
 def sys_upgrade_info():
 
@@ -35,3 +35,4 @@ def sys_upgrade_info():
 def page_not_found(error):
     return redirect(url_for('upgrade.sys_info'))
 
+"""

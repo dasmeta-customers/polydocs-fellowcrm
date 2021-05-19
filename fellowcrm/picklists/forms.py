@@ -8,12 +8,18 @@ from wtforms_sqlalchemy.fields import QuerySelectField
 from fellowcrm.users.models import User
 
 
+def dummy():
+    return Picklist.get_picklist_by_typ('Test')
+
 class NewPicklist(FlaskForm):
-    types = QuerySelectField('Type', query_factory=Picklist.get_picklist_by_typ, get_pk=lambda a: a.id,
+
+    langs = QuerySelectField('Langauge', query_factory=lambda:Picklist.get_picklist_by_typ('LOV_LANG'), get_pk=lambda a: a.id,
+                                 get_label=Picklist.get_label,allow_blank=False, blank_text='enu')
+    
+    types = QuerySelectField('Type', query_factory=Picklist.get_picklist_typ, get_pk=lambda a: a.id,
                                  get_label=Picklist.get_label,allow_blank=True, blank_text='LOV_TYPE')
     #type = StringField('Picklist Type', validators=[DataRequired(message='Picklist Type is mandatory')])
     name = StringField('Picklist Name', validators=[DataRequired(message='Picklist name is mandatory')])
-    lang = StringField('Picklist Lang')
     
     name_lang = StringField('Language-Independent')
     order = IntegerField('Order')

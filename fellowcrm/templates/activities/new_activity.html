@@ -1,0 +1,66 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<form class="form-new-picklist" method="POST">
+  {{ form.hidden_tag() }}
+  <!-- security 'csrf' token -->
+  <div
+    class="
+      d-flex
+      justify-content-between
+      flex-wrap flex-md-nowrap
+      align-items-center
+      pt-3
+      pb-2
+      mb-3
+      border-bottom
+    "
+  >
+    <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      {{ form.submit(class="btn btn-md btn-outline-info mr-2") }}
+      <input type="reset" class="btn btn-md btn-outline-secondary mr-2" />
+      <a
+        href="{{ url_for('activities.get_activities_view') }}"
+        class="btn btn-md btn-outline-secondary"
+        role="button"
+      >
+        <span data-feather="arrow-left"></span>
+        {{_('Back to List')}}
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <div class="form-group">
+        {{ form.types.label(class="form-control-label") }} {% if
+        form.types.errors %} {{ form.types(class="my-select form-control
+        form-control-lg required is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.types.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.types(class="my-select form-control from-control-lg
+        required") }} {% endif %}
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="form-group">
+        {{ form.name.label(class="form-control-label") }} {% if form.name.errors
+        %} {{ form.name(class="form-control form-control-lg required
+        is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.name.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.name(class="form-control required from-control-lg",
+        placeholder="activity name ...") }} {% endif %}
+      </div>
+    </div>
+    
+  </div>
+</form>
+{% endblock %}
