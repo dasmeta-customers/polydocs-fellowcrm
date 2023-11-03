@@ -9,10 +9,10 @@ TEST_SECRET_KEY = 'test_secret_key'
 SECRET_KEY = 'your_production_key'
 
 # DEVELOPMENT DATABASE SETTINGS
-DEV_DB_HOST = 'localhost'
+DEV_DB_HOST = 'db'
 DEV_DB_USER = 'postgres'
-DEV_DB_PASS = ''
-DEV_DB_NAME = 'crm'
+DEV_DB_PASS = 'postgres'
+DEV_DB_NAME = 'postgres'
 
 # TEST DATABASE SETTINGS
 TEST_DB_HOST = '<database_host>'

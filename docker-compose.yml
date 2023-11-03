@@ -3,16 +3,34 @@ version: '3'
 services:
   db:
     image: postgres
-    # volumes:
-    #   - /home/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./dist/db:/var/lib/postgresql/data
 
   web:
     build: .
-    command: python run.py
+    command:
+      - "gunicorn"
+      - "-b"
+      - "0.0.0.0:8080"
+      - "app:app"
+      - "--statsd-host=statsd-to-prometheus:9125" # docs: https://docs.gunicorn.org/en/stable/instrumentation.html, result can be check in: http://localhost:9102/metrics `for i in `seq 500`; do curl http://127.0.0.1:8080 && sleep $((RANDOM % 5)); done`
+      - "--statsd-prefix=fellowcrm"
     volumes:
       - .:/app
-    image: dajor/fellowcrm
+    environment:
+      - FLASK_ENV=development
+    # image: dajor/fellowcrm
     ports:
-      - "5000:5000"
+      - "8080:8080"
     depends_on:
       - db
+  statsd-to-prometheus:
+    image: prom/statsd-exporter
+    ports:
+      - 9102:9102
+      - 9125:9125
+      - 9125:9125/udp
